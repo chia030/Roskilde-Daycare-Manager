@@ -1,0 +1,119 @@
+package org.roskildedaycare.admin.Model;
+
+import java.time.LocalDate;
+
+
+public class Child {
+
+    private int student_id;
+    private String cpr;
+    private String name;
+    private LocalDate dob;
+    private int class_id;
+    private String parent_name;
+    private String parent_number;
+    private boolean payment = false;
+
+    public Child() {
+    }
+
+    //CONSTRUCTOR FOR THE WAITING LIST
+    public Child(String cpr, String name, String parent_name, String parent_number) {
+        this.cpr = cpr;
+        this.name = name;
+        this.parent_name = parent_name;
+        this.parent_number = parent_number;
+    }
+
+    //CONSTRUCTOR FOR NEW CHILDREN WITH A CLASS
+    public Child(int student_id, String cpr, String name, LocalDate dob, int class_id, String parent_name, String parent_number, int payment) {
+        this.student_id = student_id;
+        this.cpr = cpr;
+        this.name = name;
+        this.dob = dob;
+        this.class_id = class_id;
+        this.parent_name = parent_name;
+        this.parent_number = parent_number;
+        if (payment != 0) this.payment = true;
+    }
+
+    public int getStudent_id() {
+        return student_id;
+    }
+
+    public void setStudent_id(int student_id) {
+        this.student_id = student_id;
+    }
+
+    public String getCpr() {
+        return cpr;
+    }
+
+    public void setCpr(String cpr) {
+        this.cpr = cpr;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public int getClass_id() {
+        return class_id;
+    }
+
+    public void setClass_id(int class_id) {
+        this.class_id = class_id;
+    }
+
+    public String getParent_name() {
+        return parent_name;
+    }
+
+    public void setParent_name(String parent_name) {
+        this.parent_name = parent_name;
+    }
+
+    public String getParent_number() {
+        return parent_number;
+    }
+
+    public void setParent_number(String parent_number) {
+        this.parent_number = parent_number;
+    }
+
+    public boolean isPayment() {
+        return payment;
+    }
+
+    public void setPayment(boolean payment) {
+        this.payment = payment;
+    }
+
+    @Override
+    public String toString() {
+        return "Child{" +
+                "student_id=" + student_id +
+                ", cpr='" + cpr + '\'' +
+                ", name='" + name + '\'' +
+                ", dob=" + dob +
+                ", class_id=" + class_id +
+                ", parent_name='" + parent_name + '\'' +
+                ", parent_number='" + parent_number + '\'' +
+                ", payment=" + payment +
+                '}';
+    }
+}
+
+
