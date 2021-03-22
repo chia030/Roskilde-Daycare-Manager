@@ -11,8 +11,11 @@ public class UsersRepo {
 
     static Statement statement = Connector.connectRDAS();
 
+    //UNUSED
     private static ArrayList<User> userList;
 
+
+    // UNUSED
     public static ArrayList<User> fetchAllUsers() {
 
         String sql = "SELECT * FROM users";
@@ -39,4 +42,50 @@ public class UsersRepo {
         return userList;
 
     }
+
+    // RETURNS WHETHER THE USER EXISTS
+    public static boolean isUser(String id, String password) {
+
+        String userSQL = "SELECT * FROM users WHERE password = '" + password + "' AND EXISTS " +
+                "( SELECT user_id FROM users WHERE user_id = '" + id + "')";
+
+        try {
+            ResultSet res = statement.executeQuery(userSQL);
+
+            while (res.next()) {
+                return true;
+            }
+
+            res.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+    }
+
+    // RETURNS WHETHER THE CURRENT USER IS AN ADMINISTRATOR
+    public static boolean isAdmin(String id) {
+
+        String adminSQL = "SELECT * FROM users WHERE all_permissions = '1'";
+
+        try {
+            ResultSet res = statement.executeQuery(adminSQL);
+
+            while (res.next()) {
+                return res.getString("user_id").equals(id);
+            }
+
+            res.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+    }
+
 }

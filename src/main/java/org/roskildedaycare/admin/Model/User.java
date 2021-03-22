@@ -2,6 +2,8 @@ package org.roskildedaycare.admin.Model;
 
 public class User {
 
+    //This class might be superfluous!!!
+
     private String user_name;
     private String password;
     private boolean all_permissions_granted;
