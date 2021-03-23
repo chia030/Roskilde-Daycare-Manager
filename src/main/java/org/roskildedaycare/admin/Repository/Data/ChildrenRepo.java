@@ -8,19 +8,18 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChildrenRepo {
 
     static Statement statement = Connector.connectRDAS();
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    private List<Child> childrenList;
+    private static ArrayList<Child> childrenList;
 
     public ChildrenRepo() {
     }
 
-    public List fetchAllChildren() {
+    public static ArrayList<Child> fetchAllChildren() {
 
         String sql = "SELECT * FROM children";
         childrenList = new ArrayList<>();
@@ -50,7 +49,15 @@ public class ChildrenRepo {
             e.printStackTrace();
         }
 
+        setClassName(childrenList);
+
         return childrenList;
+    }
+
+    public static void setClassName(ArrayList<Child> list) {
+        for (Child i : list) {
+            i.setClass_name(ClassesRepo.fetchClassName(i.getClass_id()));
+        }
     }
 
 

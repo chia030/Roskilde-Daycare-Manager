@@ -74,7 +74,7 @@ public class AdminHomePanel extends javax.swing.JPanel {
         scheduleButton.setBorderPainted(false);
         scheduleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                scheduleButtonActionPerformed(evt);
+                scheduleButtonActionPerformed(frame);
             }
         });
 
@@ -86,7 +86,7 @@ public class AdminHomePanel extends javax.swing.JPanel {
         waitingListButton.setBorderPainted(false);
         waitingListButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                waitingListButtonActionPerformed(evt);
+                waitingListButtonActionPerformed(frame);
             }
         });
 
@@ -175,12 +175,12 @@ public class AdminHomePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }
 
-    private void scheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void scheduleButtonActionPerformed(MainFrame frame) {
+        frame.changePanel(ViewWrap.ADMIN_SCHEDULE);
     }
 
-    private void waitingListButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void waitingListButtonActionPerformed(MainFrame frame) {
+        frame.changePanel(ViewWrap.ADMIN_WAITING_LIST);
     }
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {

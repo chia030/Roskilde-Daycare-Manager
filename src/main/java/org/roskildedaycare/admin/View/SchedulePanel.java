@@ -1,8 +1,8 @@
 package org.roskildedaycare.admin.View;
 
-public class SchedulePanel extends javax.swing.JPanel {
+import javax.swing.*;
 
-    //maybe make classes that extend this SchedulePanel and are different for teachers/admin
+public abstract class SchedulePanel extends javax.swing.JPanel {
 
     // Variables:
     private javax.swing.JButton backButton;
@@ -14,6 +14,14 @@ public class SchedulePanel extends javax.swing.JPanel {
 
     public SchedulePanel(MainFrame frame) {
         initComponents(frame);
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+
+    public void setBackButton(JButton backButton) {
+        this.backButton = backButton;
     }
 
     @SuppressWarnings("unchecked")
@@ -36,11 +44,11 @@ public class SchedulePanel extends javax.swing.JPanel {
         backButton.setMaximumSize(new java.awt.Dimension(575, 515));
         backButton.setMinimumSize(new java.awt.Dimension(575, 515));
         backButton.setPreferredSize(new java.awt.Dimension(575, 515));
-        backButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
-            }
-        });
+//        backButton.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                backButtonActionPerformed(evt);
+//            }
+//        });
 
         childrenHeader.setFont(new java.awt.Font("MS Gothic", 0, 48)); // NOI18N
         childrenHeader.setForeground(new java.awt.Color(255, 102, 102));
@@ -160,9 +168,8 @@ public class SchedulePanel extends javax.swing.JPanel {
         );
     }
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+
+    protected abstract void backButtonActionPerformed(MainFrame frame);
 
     private void scheduleTableMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:

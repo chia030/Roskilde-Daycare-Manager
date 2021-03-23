@@ -6,15 +6,31 @@ import org.roskildedaycare.admin.Repository.Driver.Connector;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ClassesRepo {
 
     static Statement statement = Connector.connectRDAS();
 
-    private List<DaycareClass> classesList;
+    private ArrayList<DaycareClass> classesList;
 
-    public List fetchAllClasses() {
+    public static String fetchClassName(int class_id) {
+
+        String sql = "SELECT * FROM classes WHERE class_id = '" + class_id + "'";
+
+        try {
+            ResultSet res = statement.executeQuery(sql);
+
+            while (res.next()) {
+                return res.getString("class_name").toUpperCase();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public ArrayList<DaycareClass> fetchAllClasses() {
 
         String sql = "SELECT * FROM classes";
         classesList = new ArrayList<>();
@@ -40,4 +56,5 @@ public class ClassesRepo {
         return classesList;
 
     }
+
 }

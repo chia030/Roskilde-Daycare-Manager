@@ -54,14 +54,14 @@ public class TeacherHomePanel extends javax.swing.JPanel {
         childrenButton.setBackground(new java.awt.Color(255, 250, 200));
         childrenButton.setFont(new java.awt.Font("Consolas", 2, 18)); // NOI18N
         childrenButton.setForeground(new java.awt.Color(153, 51, 0));
-        childrenButton.setText("Groups");
+        childrenButton.setText("Children");
         childrenButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 51, 0)));
         childrenButton.setBorderPainted(false);
         childrenButton.setDefaultCapable(false);
 
         childrenButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                childrenButtonActionPerformed(evt);
+                childrenButtonActionPerformed(frame);
             }
         });
 
@@ -122,12 +122,12 @@ public class TeacherHomePanel extends javax.swing.JPanel {
         frame.changePanel(ViewWrap.START);
     }
 
-    private void childrenButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void childrenButtonActionPerformed(MainFrame frame) {
+        frame.changePanel(ViewWrap.TEACHER_CHILDREN);
     }
 
     private void scheduleButtonActionPerformed(MainFrame frame) {
-        frame.changePanel(ViewWrap.SCHEDULE);
+        frame.changePanel(ViewWrap.TEACHER_SCHEDULE);
     }
 
 }

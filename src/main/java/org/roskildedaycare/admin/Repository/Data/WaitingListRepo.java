@@ -6,15 +6,14 @@ import org.roskildedaycare.admin.Repository.Driver.Connector;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class WaitingListRepo {
 
     static Statement statement = Connector.connectRDAS();
 
-    private List<Child> waitingList;
+    private static ArrayList<Child> waitingList;
 
-    public List fetchWaitingList() {
+    public static ArrayList<Child> fetchWaitingList() {
 
         String sql = "SELECT * FROM waiting_list";
         waitingList = new ArrayList<>();

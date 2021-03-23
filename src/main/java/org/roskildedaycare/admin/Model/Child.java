@@ -1,6 +1,7 @@
 package org.roskildedaycare.admin.Model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 
 public class Child {
@@ -9,10 +10,12 @@ public class Child {
     private String cpr;
     private String name;
     private LocalDate dob;
+    private int age; // calculateAge()
     private int class_id;
+    private String class_name;
     private String parent_name;
     private String parent_number;
-    private boolean payment = false;
+    private boolean payment = false; // set to true manually by the admin when the parents (physically) pay
 
     public Child() {
     }
@@ -30,11 +33,12 @@ public class Child {
         this.student_id = student_id;
         this.cpr = cpr;
         this.name = name;
-        this.dob = dob;
+        this.dob = dob; //this could be extracted from the cpr
+        setAge();
         this.class_id = class_id;
         this.parent_name = parent_name;
         this.parent_number = parent_number;
-        if (payment != 0) this.payment = true;
+        this.payment = payment != 0;
     }
 
     public int getStudent_id() {
@@ -101,6 +105,22 @@ public class Child {
         this.payment = payment;
     }
 
+    public void setAge() {
+        this.age = Period.between(this.dob, LocalDate.now()).getYears();
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+
+    public String getClass_name() {
+        return class_name;
+    }
+
+    public void setClass_name(String class_name) {
+        this.class_name = class_name;
+    }
+
     @Override
     public String toString() {
         return "Child{" +
@@ -108,12 +128,15 @@ public class Child {
                 ", cpr='" + cpr + '\'' +
                 ", name='" + name + '\'' +
                 ", dob=" + dob +
+                ", age=" + age +
                 ", class_id=" + class_id +
+                ", class_name='" + class_name + '\'' +
                 ", parent_name='" + parent_name + '\'' +
                 ", parent_number='" + parent_number + '\'' +
                 ", payment=" + payment +
                 '}';
     }
+
 }
 
 
