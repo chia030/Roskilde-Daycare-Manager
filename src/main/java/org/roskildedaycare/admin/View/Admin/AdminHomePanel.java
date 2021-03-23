@@ -98,7 +98,7 @@ public class AdminHomePanel extends javax.swing.JPanel {
         settingsButton.setBorderPainted(false);
         settingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                settingsButtonActionPerformed(evt);
+                settingsButtonActionPerformed(frame);
             }
         });
 
@@ -183,8 +183,8 @@ public class AdminHomePanel extends javax.swing.JPanel {
         frame.changePanel(ViewWrap.ADMIN_WAITING_LIST);
     }
 
-    private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void settingsButtonActionPerformed(MainFrame frame) {
+        frame.changePanel(ViewWrap.ADMIN_EDIT_CHILD);
     }
 
     private void logoutButtonActionPerformed(MainFrame frame, StartPanel start) {

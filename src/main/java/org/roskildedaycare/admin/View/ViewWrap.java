@@ -1,9 +1,6 @@
 package org.roskildedaycare.admin.View;
 
-import org.roskildedaycare.admin.View.Admin.AdminChildrenPanel;
-import org.roskildedaycare.admin.View.Admin.AdminHomePanel;
-import org.roskildedaycare.admin.View.Admin.AdminSchedulePanel;
-import org.roskildedaycare.admin.View.Admin.WaitingListPanel;
+import org.roskildedaycare.admin.View.Admin.*;
 import org.roskildedaycare.admin.View.Teacher.TeacherChildrenPanel;
 import org.roskildedaycare.admin.View.Teacher.TeacherHomePanel;
 import org.roskildedaycare.admin.View.Teacher.TeacherSchedulePanel;
@@ -14,6 +11,7 @@ public class ViewWrap {
     public static final String START = "start";
     public static final String ADMIN_HOME = "admin";
     public static final String ADMIN_CHILDREN = "admin/children";
+    public static final String ADMIN_EDIT_CHILD = "admin/children/edit";
     public static final String ADMIN_SCHEDULE = "admin/schedule";
     public static final String ADMIN_WAITING_LIST = "admin/waiting-list";
     public static final String TEACHER_HOME = "teacher";
@@ -28,6 +26,7 @@ public class ViewWrap {
     //ADMIN PANELS
     AdminHomePanel admin;
     AdminChildrenPanel adminChildren;
+    EditChildPanel editChild;
     AdminSchedulePanel adminSchedule;
     WaitingListPanel waitingList;
 
@@ -55,10 +54,12 @@ public class ViewWrap {
         //ADD ADMIN PANELS
         admin = new AdminHomePanel(frame, start);
         adminChildren = new AdminChildrenPanel(frame);
+        editChild = new EditChildPanel(frame);
         adminSchedule = new AdminSchedulePanel(frame);
         waitingList = new WaitingListPanel(frame);
         frame.addPanel(ADMIN_HOME, admin);
         frame.addPanel(ADMIN_CHILDREN, adminChildren);
+        frame.addPanel(ADMIN_EDIT_CHILD, editChild);
         frame.addPanel(ADMIN_SCHEDULE, adminSchedule);
         frame.addPanel(ADMIN_WAITING_LIST, waitingList);
 
