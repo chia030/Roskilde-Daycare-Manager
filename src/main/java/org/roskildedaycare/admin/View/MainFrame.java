@@ -13,6 +13,7 @@ public class MainFrame extends JFrame {
     //CONSTRUCTOR:
     public MainFrame() {
         initFrame();
+        setDefButton(null);
     }
 
 //            This makes the frame open ad infinitum lol:

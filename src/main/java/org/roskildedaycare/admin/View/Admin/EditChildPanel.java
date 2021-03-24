@@ -1,5 +1,7 @@
 package org.roskildedaycare.admin.View.Admin;
 
+import org.roskildedaycare.admin.Model.Child;
+import org.roskildedaycare.admin.Repository.Data.ChildrenRepo;
 import org.roskildedaycare.admin.View.MainFrame;
 import org.roskildedaycare.admin.View.ViewWrap;
 
@@ -21,10 +23,14 @@ public class EditChildPanel extends javax.swing.JPanel {
     private javax.swing.JLabel phone;
     private javax.swing.JTextField phoneField;
     private javax.swing.JButton saveButton;
+    private javax.swing.JCheckBox paymentCheckBox;
     // End of variables
 
-    public EditChildPanel(MainFrame frame) {
+    public EditChildPanel(MainFrame frame, int student) {
+
         initComponents(frame);
+        if (student != 0) initChild(student);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -45,6 +51,7 @@ public class EditChildPanel extends javax.swing.JPanel {
         saveButton = new javax.swing.JButton();
         cprField = new javax.swing.JTextField();
         deleteButton = new javax.swing.JButton();
+        paymentCheckBox = new javax.swing.JCheckBox();
 
         setMaximumSize(new java.awt.Dimension(771, 539));
         setMinimumSize(new java.awt.Dimension(771, 539));
@@ -79,33 +86,43 @@ public class EditChildPanel extends javax.swing.JPanel {
         name.setForeground(new java.awt.Color(153, 51, 0));
         name.setText("NAME:");
 
+        nameField.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
+        nameField.setText(" ");
+
         cpr.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         cpr.setForeground(new java.awt.Color(153, 51, 0));
         cpr.setText("CPR:");
 
-        nameField.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
-        nameField.setText("get data");
+        cprField.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
+        cprField.setText(" ");
 
         dob.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         dob.setForeground(new java.awt.Color(153, 51, 0));
         dob.setText("BIRTH:");
 
         dobField.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
-        dobField.setText("get data");
+        dobField.setText(" ");
 
         parent.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         parent.setForeground(new java.awt.Color(153, 51, 0));
         parent.setText("PARENT:");
 
         parentField.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
-        parentField.setText("get data");
+        parentField.setText(" ");
 
         phone.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         phone.setForeground(new java.awt.Color(153, 51, 0));
         phone.setText("PHONE:");
 
         phoneField.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
-        phoneField.setText("get data");
+        phoneField.setText(" ");
+
+        paymentCheckBox.setBackground(new java.awt.Color(255, 250, 200));
+        paymentCheckBox.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        paymentCheckBox.setForeground(new java.awt.Color(153, 51, 0));
+        paymentCheckBox.setText("PAYMENT");
+        paymentCheckBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 51, 0)));
+        paymentCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         saveButton.setBackground(new java.awt.Color(255, 250, 200));
         saveButton.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
@@ -120,14 +137,11 @@ public class EditChildPanel extends javax.swing.JPanel {
             }
         });
 
-        cprField.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
-        cprField.setText("get data");
-
         deleteButton.setBackground(new java.awt.Color(255, 200, 200));
         deleteButton.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         deleteButton.setForeground(new java.awt.Color(153, 51, 0));
         deleteButton.setText("DELETE");
-        deleteButton.setToolTipText("Delete entry.");
+        deleteButton.setToolTipText("Delete all child info.");
         deleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 51, 0), 2));
         deleteButton.setBorderPainted(false);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -145,6 +159,22 @@ public class EditChildPanel extends javax.swing.JPanel {
                                 .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(editFormPanelLayout.createSequentialGroup()
                                                 .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(editFormPanelLayout.createSequentialGroup()
+                                                                .addGap(74, 292, Short.MAX_VALUE)
+                                                                .addComponent(phone))
+                                                        .addGroup(editFormPanelLayout.createSequentialGroup()
+                                                                .addGap(30, 30, 30)
+                                                                .addComponent(paymentCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(editFormPanelLayout.createSequentialGroup()
+                                                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(26, 26, 26)
+                                                                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(editFormPanelLayout.createSequentialGroup()
+                                                .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(cpr)
                                                         .addComponent(name))
                                                 .addGap(34, 34, 34)
@@ -158,17 +188,9 @@ public class EditChildPanel extends javax.swing.JPanel {
                                                 .addGap(18, 18, 18)
                                                 .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(dobField)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editFormPanelLayout.createSequentialGroup()
+                                                        .addGroup(editFormPanelLayout.createSequentialGroup()
                                                                 .addComponent(parentField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                                                                .addComponent(phone)
-                                                                .addGap(18, 18, 18)
-                                                                .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addGroup(editFormPanelLayout.createSequentialGroup()
-                                                                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(26, 26, 26)
-                                                                                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                        .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                                .addGap(0, 0, Short.MAX_VALUE)))))
                                 .addGap(45, 45, 45))
         );
         editFormPanelLayout.setVerticalGroup(
@@ -187,15 +209,17 @@ public class EditChildPanel extends javax.swing.JPanel {
                                         .addComponent(dob)
                                         .addComponent(dobField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(parent)
-                                        .addComponent(parentField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(phone))
+                                .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(phoneField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(parent)
+                                                .addComponent(parentField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(phone)))
                                 .addGap(30, 30, 30)
                                 .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(paymentCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
@@ -203,14 +227,14 @@ public class EditChildPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addComponent(editFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(65, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(editHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(187, 187, 187))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(editFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(65, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
                                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,10 +251,13 @@ public class EditChildPanel extends javax.swing.JPanel {
                                 .addComponent(editFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(100, Short.MAX_VALUE))
         );
+
+        frame.setDefButton(saveButton); //turn it off later
+
     }
 
     private void backButtonActionPerformed(MainFrame frame) {
-        frame.changePanel(ViewWrap.ADMIN_HOME);
+        frame.changePanel(ViewWrap.ADMIN_CHILDREN);
     }
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +266,24 @@ public class EditChildPanel extends javax.swing.JPanel {
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+    }
+
+    private void initChild(int id) {
+
+        Child child = ChildrenRepo.fetchChild(id);
+
+        //SET ALL FIELDS TO DISPLAY THE CORRECT INFO:
+        nameField.setText(child.getName());
+        cprField.setText(child.getCpr());
+        dobField.setText(child.getDob().toString());
+        parentField.setText(child.getParent_name());
+        phoneField.setText(child.getParent_number());
+        paymentCheckBox.setSelected(child.isPayment());
+
+    }
+
+    public void refresh(int student) {
+        if (student != 0) initChild(student);
     }
 
 }

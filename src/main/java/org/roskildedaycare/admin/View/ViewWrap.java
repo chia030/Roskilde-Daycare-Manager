@@ -20,26 +20,26 @@ public class ViewWrap {
 
     public static final String SCHEDULE = "schedule";
 
-    MainFrame frame;
-    StartPanel start;
-
+    public static StartPanel start;
     //ADMIN PANELS
-    AdminHomePanel admin;
-    AdminChildrenPanel adminChildren;
-    EditChildPanel editChild;
-    AdminSchedulePanel adminSchedule;
-    WaitingListPanel waitingList;
-
-
+    public static AdminHomePanel admin;
+    public static AdminChildrenPanel adminChildren;
+    public static EditChildPanel editChild;
+    public static AdminSchedulePanel adminSchedule;
+    public static WaitingListPanel waitingList;
     //TEACHER PANELS
-    TeacherHomePanel teacher;
-    TeacherChildrenPanel teacherChildren;
-    TeacherSchedulePanel teacherSchedule;
+    public static TeacherHomePanel teacher;
+    public static TeacherChildrenPanel teacherChildren;
+    public static TeacherSchedulePanel teacherSchedule;
+    private MainFrame frame;
 
     public ViewWrap() {
 
         frame = new MainFrame();
         addAllPanels(frame);
+
+        start.reset(frame); // not very nice to have this here
+
         frame.setVisible(true);
 
     }
@@ -47,14 +47,12 @@ public class ViewWrap {
     public void addAllPanels(MainFrame frame) {
 
         start = new StartPanel(frame);
-//        schedule = new SchedulePanel(frame);
         frame.addPanel(START, start);
-//        frame.addPanel(SCHEDULE, schedule);
 
         //ADD ADMIN PANELS
         admin = new AdminHomePanel(frame, start);
         adminChildren = new AdminChildrenPanel(frame);
-        editChild = new EditChildPanel(frame);
+        editChild = new EditChildPanel(frame, adminChildren.getStudent_id());
         adminSchedule = new AdminSchedulePanel(frame);
         waitingList = new WaitingListPanel(frame);
         frame.addPanel(ADMIN_HOME, admin);

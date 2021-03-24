@@ -60,5 +60,38 @@ public class ChildrenRepo {
         }
     }
 
+    public static Child fetchChild(int student_id) {
+
+        String sql = "SELECT * FROM children WHERE student_id = '" + student_id + "'";
+
+        Child child;
+
+        try {
+
+            ResultSet res = statement.executeQuery(sql);
+
+            while (res.next()) {
+
+                return new Child(
+                        res.getInt("student_id"),
+                        res.getString("cpr"),
+                        res.getString("name"),
+                        LocalDate.parse(res.getString("dob"), formatter),
+                        res.getInt("class_id"),
+                        res.getString("parent_name"),
+                        res.getString("parent_number"),
+                        res.getInt("payment")
+                );
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
 
 }

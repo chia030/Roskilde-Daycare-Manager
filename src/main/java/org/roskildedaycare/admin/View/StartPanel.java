@@ -147,7 +147,7 @@ public class StartPanel extends javax.swing.JPanel {
         );
 
         //sets the default button as the login button (ENTER triggers it):
-        frame.setDefButton(loginButton);
+        frame.setDefButton(loginButton); //although it's not working here when the start panel is static
 
     }
 

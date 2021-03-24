@@ -11,19 +11,29 @@ import java.awt.event.ItemEvent;
 
 public class AdminChildrenPanel extends javax.swing.JPanel {
 
+
     private static int editButtonState;
-    private javax.swing.JButton backButton;
-    private javax.swing.JLabel childrenHeader;
-    private javax.swing.JTable childrenTable;
+    private static int student_id;
     // Variables:
+    private javax.swing.JButton backButton;
     private javax.swing.JButton addButton;
     private javax.swing.JToggleButton editButton;
     private javax.swing.JScrollPane tablePane;
+    private javax.swing.JLabel childrenHeader;
+    private javax.swing.JTable childrenTable;
     // End of variables
 
     //CONSTRUCTOR:
     public AdminChildrenPanel(MainFrame frame) {
         initComponents(frame);
+    }
+
+    public static int getStudent_id() {
+        return student_id;
+    }
+
+    public static void setStudent_id(int student_id) {
+        AdminChildrenPanel.student_id = student_id;
     }
 
     @SuppressWarnings("unchecked")
@@ -74,17 +84,16 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
             }
         });
 
+        editButton.setSelected(false);
         editButton.setBackground(new java.awt.Color(255, 250, 200));
         editButton.setForeground(new java.awt.Color(153, 51, 0));
         editButton.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        editButton.setText("EDIT CHILD INFO");
-        editButton.setToolTipText("Please select (by clicking twice) the child whose info you wish to edit.");
-//        editButton.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 102, 102)));
+        editButton.setText("MORE INFO...");
+        editButton.setToolTipText("Please select the child whose info you wish to display.");
         editButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         editButton.setDoubleBuffered(true);
         editButton.setFocusPainted(false);
         editButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        editButton.setOpaque(true);
         editButton.setSize(new java.awt.Dimension(142, 42));
         editButton.addItemListener(new java.awt.event.ItemListener() {
             @Override
@@ -140,40 +149,6 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
 
         tablePane.setViewportView(childrenTable);
 
-//        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-//        this.setLayout(layout);
-//        layout.setHorizontalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-//                                .addGap(82, 82,82)
-//                                .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(82, 82, 82))
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                        .addGroup(layout.createSequentialGroup()
-//                                                .addGap(35, 35, 35)
-//                                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-//                                        .addGroup(layout.createSequentialGroup()
-//                                                .addGap(187, 187, 187)
-//                                                .addComponent(childrenHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE))
-//                                        .addGroup(layout.createSequentialGroup()
-//                                                .addGap(307, 307, 307)
-//                                                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-//                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-//        );
-//        layout.setVerticalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addGap(35, 35, 35)
-//                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-//                                .addComponent(childrenHeader)
-//                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-//                                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(18, 18, 18)
-//                                .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(45, 45, 45))
-//        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -216,6 +191,7 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
         );
 
         getAccessibleContext().setAccessibleName("AdminChildrenPanel");
+
     }
 
     private void backButtonActionPerformed(MainFrame frame) {
@@ -247,12 +223,23 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
         if (evt.getClickCount() == 2 && editButtonState == ItemEvent.SELECTED) {
             JTable target = (JTable) evt.getSource();
             int row = target.getSelectedRow();
-            System.out.println(target.getValueAt(row, 0).toString().charAt(0)); //returns the selected student_id
 
-            //change the panel and display the child according to the user's choice
+            //selected student's id: {target.getValueAt(row, 0).toString().charAt(0)}
+            student_id = Integer.parseInt(String.valueOf(target.getValueAt(row, 0).toString().charAt(0)));
+
+            ViewWrap.editChild.refresh(student_id);
+            frame.changePanel(ViewWrap.ADMIN_EDIT_CHILD);
+            editButton.setSelected(false);
 
         }
 
+    }
+
+    //called in EditChildPanel when the user decides to go back
+    //maybe this is not needed
+    public void reset(MainFrame frame) {
+        initComponents(frame);
+        student_id = 0;
     }
 
 }
