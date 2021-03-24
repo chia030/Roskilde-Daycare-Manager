@@ -14,7 +14,7 @@ public class Shift {
     private LocalDate day_of_week;
 
     //ASSIGNED ATTRIBUTES:
-    private Employee assignee;
+    private Employee assignee; // TODO add this variable to the database and make it shuffle every week
 
     public Shift() {
     }

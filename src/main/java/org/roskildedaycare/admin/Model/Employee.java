@@ -4,18 +4,25 @@ import java.time.LocalDate;
 
 public class Employee {
 
+    //staff variables:
     private int employee_id;
     private String cpr;
     private String name;
-    private EmployeeType type;
+    private String type;
     private LocalDate dob;
     private String phone_number;
     private String iban;
 
+    //TODO add boolean 'isPaid'
+
+    //employee_type variables:
+    private String monthlySalary;
+    private int hoursPerWeek;
+
     public Employee() {
     }
 
-    public Employee(int employee_id, String cpr, String name, EmployeeType type, LocalDate dob, String phone_number, String iban) {
+    public Employee(int employee_id, String cpr, String name, String type, LocalDate dob, String phone_number, String iban) {
         this.employee_id = employee_id;
         this.cpr = cpr;
         this.name = name;
@@ -49,11 +56,11 @@ public class Employee {
         this.name = name;
     }
 
-    public EmployeeType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(EmployeeType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -81,16 +88,34 @@ public class Employee {
         this.phone_number = phone_number;
     }
 
+    public String getMonthlySalary() {
+        return monthlySalary;
+    }
+
+    public void setMonthlySalary(String monthlySalary) {
+        this.monthlySalary = monthlySalary;
+    }
+
+    public int getHoursPerWeek() {
+        return hoursPerWeek;
+    }
+
+    public void setHoursPerWeek(int hoursPerWeek) {
+        this.hoursPerWeek = hoursPerWeek;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "employee_id=" + employee_id +
                 ", cpr='" + cpr + '\'' +
                 ", name='" + name + '\'' +
-                ", type=" + type +
+                ", type='" + type + '\'' +
                 ", dob=" + dob +
                 ", phone_number='" + phone_number + '\'' +
                 ", iban='" + iban + '\'' +
+                ", monthlySalary='" + monthlySalary + '\'' +
+                ", hoursPerWeek=" + hoursPerWeek +
                 '}';
     }
 }
