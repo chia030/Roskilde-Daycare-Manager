@@ -1,8 +1,11 @@
 package org.roskildedaycare.admin.Model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Employee {
+
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     //staff variables:
     private int employee_id;
@@ -12,17 +15,40 @@ public class Employee {
     private LocalDate dob;
     private String phone_number;
     private String iban;
-
-    //TODO add boolean 'isPaid'
+    private boolean paid;
+    private int payment_month;
 
     //employee_type variables:
     private String monthlySalary;
     private int hoursPerWeek;
+    private int typeLimit; // - column 'limit' - the amount of employees of that type needed at the daycare
 
     public Employee() {
     }
 
-    public Employee(int employee_id, String cpr, String name, String type, LocalDate dob, String phone_number, String iban) {
+    // CONSTRUCTOR TO ADD NEW EMPLOYEE TO THE DATABASE
+    public Employee(String name, String cpr, String dob, String phone_number, String iban) {
+        this.name = name;
+        this.cpr = cpr;
+        this.dob = LocalDate.parse(dob, formatter);
+        this.phone_number = phone_number;
+        this.iban = iban;
+    }
+
+    // CONSTRUCTOR FOR STAFF PANEL
+    public Employee(int employee_id, String name, String type, String phone_number, String cpr, String iban, int paid, int payment_month) {
+        this.employee_id = employee_id;
+        this.name = name;
+        this.type = type;
+        this.phone_number = phone_number;
+        this.cpr = cpr;
+        this.iban = iban;
+        this.paid = paid != 0;
+        this.payment_month = payment_month;
+    }
+
+    // CONSTRUCTOR FOR ARRAYLIST
+    public Employee(int employee_id, String cpr, String name, String type, LocalDate dob, String phone_number, String iban, int paid, int payment_month) {
         this.employee_id = employee_id;
         this.cpr = cpr;
         this.name = name;
@@ -30,6 +56,8 @@ public class Employee {
         this.dob = dob;
         this.phone_number = phone_number;
         this.iban = iban;
+        this.paid = paid != 0;
+        this.payment_month = payment_month;
     }
 
     public int getEmployee_id() {
@@ -104,6 +132,30 @@ public class Employee {
         this.hoursPerWeek = hoursPerWeek;
     }
 
+    public int getTypeLimit() {
+        return typeLimit;
+    }
+
+    public void setTypeLimit(int typeLimit) {
+        this.typeLimit = typeLimit;
+    }
+
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
+
+    public int getPayment_month() {
+        return payment_month;
+    }
+
+    public void setPayment_month(int payment_month) {
+        this.payment_month = payment_month;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -118,6 +170,7 @@ public class Employee {
                 ", hoursPerWeek=" + hoursPerWeek +
                 '}';
     }
+
 }
 
 

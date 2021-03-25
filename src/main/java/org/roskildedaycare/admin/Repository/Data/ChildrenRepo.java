@@ -40,7 +40,8 @@ public class ChildrenRepo {
                                 res.getInt("class_id"),
                                 res.getString("parent_name"),
                                 res.getString("parent_number"),
-                                res.getInt("payment")
+                                res.getInt("payment"),
+                                res.getInt("payment_month")
                         )
                 );
             }
@@ -80,7 +81,8 @@ public class ChildrenRepo {
                         res.getInt("class_id"),
                         res.getString("parent_name"),
                         res.getString("parent_number"),
-                        res.getInt("payment")
+                        res.getInt("payment"),
+                        res.getInt("payment_month")
                 );
 
             }

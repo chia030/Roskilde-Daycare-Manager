@@ -16,6 +16,7 @@ public class Child {
     private String parent_name;
     private String parent_number;
     private boolean payment = false; // set to true manually by the admin when the parents (physically) pay
+    private int payment_month;
 
     public Child() {
     }
@@ -29,7 +30,7 @@ public class Child {
     }
 
     //CONSTRUCTOR FOR NEW CHILDREN WITH A CLASS
-    public Child(int student_id, String cpr, String name, LocalDate dob, int class_id, String parent_name, String parent_number, int payment) {
+    public Child(int student_id, String cpr, String name, LocalDate dob, int class_id, String parent_name, String parent_number, int payment, int payment_month) {
         this.student_id = student_id;
         this.cpr = cpr;
         this.name = name;
@@ -39,6 +40,7 @@ public class Child {
         this.parent_name = parent_name;
         this.parent_number = parent_number;
         this.payment = payment != 0;
+        this.payment_month = payment_month;
     }
 
     public int getStudent_id() {
@@ -97,14 +99,6 @@ public class Child {
         this.parent_number = parent_number;
     }
 
-    public boolean isPayment() {
-        return payment;
-    }
-
-    public void setPayment(boolean payment) {
-        this.payment = payment;
-    }
-
     public void setAge() {
         this.age = Period.between(this.dob, LocalDate.now()).getYears();
     }
@@ -121,6 +115,21 @@ public class Child {
         this.class_name = class_name;
     }
 
+    public boolean isPayment() {
+        return payment;
+    }
+
+    public void setPayment(boolean payment) {
+        this.payment = payment;
+    }
+
+    public int getPayment_month() {
+        return payment_month;
+    }
+
+    public void setPayment_month(int payment_month) {
+        this.payment_month = payment_month;
+    }
 
     @Override
     public String toString() {
@@ -135,9 +144,9 @@ public class Child {
                 ", parent_name='" + parent_name + '\'' +
                 ", parent_number='" + parent_number + '\'' +
                 ", payment=" + payment +
+                ", payment_month=" + payment_month +
                 '}';
     }
-
 }
 
 

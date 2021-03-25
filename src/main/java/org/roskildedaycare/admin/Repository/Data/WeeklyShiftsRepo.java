@@ -36,7 +36,8 @@ public class WeeklyShiftsRepo {
                                 res.getInt("class_id"),
                                 LocalTime.parse(res.getString("start_time"), timeFormatter),
                                 LocalTime.parse(res.getString("end_time"), timeFormatter),
-                                LocalDate.parse(res.getString("day_of_week"), weekdayFormatter)
+                                LocalDate.parse(res.getString("day_of_week"), weekdayFormatter),
+                                res.getInt("employee_id")
                         )
                 );
 

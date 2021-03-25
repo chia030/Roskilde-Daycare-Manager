@@ -21,7 +21,7 @@ public class ClassesRepo {
             ResultSet res = statement.executeQuery(sql);
 
             while (res.next()) {
-                return res.getString("class_name").toUpperCase();
+                return res.getString("class_name");
             }
         } catch (Exception e) {
             e.printStackTrace();

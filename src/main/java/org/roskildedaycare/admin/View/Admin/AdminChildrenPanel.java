@@ -6,15 +6,16 @@ import org.roskildedaycare.admin.View.MainFrame;
 import org.roskildedaycare.admin.View.ViewWrap;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ItemEvent;
 
 public class AdminChildrenPanel extends javax.swing.JPanel {
 
-
+    // Variables:
     private static int editButtonState;
     private static int student_id;
-    // Variables:
+
     private javax.swing.JButton backButton;
     private javax.swing.JButton addButton;
     private javax.swing.JToggleButton editButton;
@@ -131,21 +132,31 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
         // END
 
         childrenTable.setModel(tableModel);
+
+        childrenTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+        childrenTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        childrenTable.getColumnModel().getColumn(0).setCellRenderer(cellRenderer);
+
         childrenTable.setAutoscrolls(true);
+        childrenTable.setCellSelectionEnabled(true);
+        childrenTable.setFillsViewportHeight(true);
+        childrenTable.setFocusTraversalPolicyProvider(true);
         childrenTable.setGridColor(new java.awt.Color(153, 51, 0));
-        childrenTable.setRequestFocusEnabled(false);
         childrenTable.setRowHeight(35);
         childrenTable.setSelectionBackground(new java.awt.Color(255, 255, 234));
         childrenTable.setSelectionForeground(new java.awt.Color(255, 102, 102));
         childrenTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         childrenTable.setShowGrid(true);
-        childrenTable.setUpdateSelectionOnSort(true);
         childrenTable.setVerifyInputWhenFocusTarget(false);
         childrenTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 childrenTableMouseClicked(evt, editButtonState, frame);
             }
         });
+
 
         tablePane.setViewportView(childrenTable);
 
@@ -211,9 +222,12 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
         if (editButtonState == ItemEvent.SELECTED) {
             editButton.setBackground(new java.awt.Color(255, 255, 234));
             editButton.setForeground(new java.awt.Color(255, 102, 102));
+            childrenTable.setCellSelectionEnabled(false);
+            childrenTable.setRowSelectionAllowed(true);
         } else {
             editButton.setBackground(new java.awt.Color(255, 250, 200));
             editButton.setForeground(new java.awt.Color(153, 51, 0));
+            childrenTable.setCellSelectionEnabled(true);
         }
 
     }

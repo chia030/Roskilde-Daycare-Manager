@@ -88,17 +88,18 @@ public class WaitingListPanel extends javax.swing.JPanel {
         // END
 
         childrenTable.setModel(tableModel);
-        childrenTable.setAutoscrolls(false);
+        childrenTable.setAutoscrolls(true);
+        childrenTable.setCellSelectionEnabled(true);
+        childrenTable.setFillsViewportHeight(true);
+        childrenTable.setFocusTraversalPolicyProvider(true);
         childrenTable.setGridColor(new java.awt.Color(153, 51, 0));
         childrenTable.setMinimumSize(new java.awt.Dimension(60, 69));
         childrenTable.setPreferredSize(new java.awt.Dimension(640, 70));
-        childrenTable.setRequestFocusEnabled(false);
         childrenTable.setRowHeight(35);
         childrenTable.setSelectionBackground(new java.awt.Color(255, 255, 234));
         childrenTable.setSelectionForeground(new java.awt.Color(255, 102, 102));
         childrenTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         childrenTable.setShowGrid(true);
-        childrenTable.setUpdateSelectionOnSort(false);
         childrenTable.setVerifyInputWhenFocusTarget(false);
         childrenTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -210,9 +211,13 @@ public class WaitingListPanel extends javax.swing.JPanel {
         if (deleteButtonState == ItemEvent.SELECTED) {
             deleteButton.setBackground(new java.awt.Color(255, 255, 234));
             deleteButton.setForeground(new java.awt.Color(255, 102, 102));
+            childrenTable.setCellSelectionEnabled(false);
+            childrenTable.setRowSelectionAllowed(true);
         } else {
             deleteButton.setBackground(new java.awt.Color(255, 250, 200));
             deleteButton.setForeground(new java.awt.Color(153, 51, 0));
+            childrenTable.setCellSelectionEnabled(true);
+
         }
 
     }

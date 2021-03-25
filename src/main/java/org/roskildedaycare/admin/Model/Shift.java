@@ -12,20 +12,22 @@ public class Shift {
     private LocalTime start_time;
     private LocalTime end_time;
     private LocalDate day_of_week;
+    private int teacher;
 
     //ASSIGNED ATTRIBUTES:
-    private Employee assignee; // TODO add this variable to the database and make it shuffle every week
+    //does it need to be an object??
+    private Employee assignee; // TODO make it shuffle every week
 
     public Shift() {
     }
 
-    public Shift(String shift_id, int class_id, LocalTime start_time, LocalTime end_time, LocalDate day_of_week) {
+    public Shift(String shift_id, int class_id, LocalTime start_time, LocalTime end_time, LocalDate day_of_week, int teacher) {
         this.shift_id = shift_id;
         this.class_id = class_id;
         this.start_time = start_time;
         this.end_time = end_time;
         this.day_of_week = day_of_week;
-        //assign teacher
+        this.teacher = teacher;
     }
 
     public String getShift_id() {
@@ -66,6 +68,14 @@ public class Shift {
 
     public void setDay_of_week(LocalDate day_of_week) {
         this.day_of_week = day_of_week;
+    }
+
+    public int getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(int teacher) {
+        this.teacher = teacher;
     }
 
     public Employee getAssignee() {

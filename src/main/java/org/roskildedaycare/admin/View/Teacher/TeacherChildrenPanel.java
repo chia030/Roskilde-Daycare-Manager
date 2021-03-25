@@ -5,16 +5,18 @@ import org.roskildedaycare.admin.Repository.Data.ChildrenRepo;
 import org.roskildedaycare.admin.View.MainFrame;
 import org.roskildedaycare.admin.View.ViewWrap;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class TeacherChildrenPanel extends javax.swing.JPanel {
 
-    // Variables declaration - do not modify
+    // Variables:
     private javax.swing.JButton backButton;
     private javax.swing.JLabel childrenHeader;
     private javax.swing.JTable childrenTable;
     private javax.swing.JScrollPane tablePane;
-    // End of variables declaration
+    // End of variables
 
     public TeacherChildrenPanel(MainFrame frame) {
         initComponents(frame);
@@ -78,15 +80,24 @@ public class TeacherChildrenPanel extends javax.swing.JPanel {
         // END
 
         childrenTable.setModel(tableModel);
-        childrenTable.setAutoscrolls(false);
+
+        childrenTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+        childrenTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        childrenTable.getColumnModel().getColumn(0).setCellRenderer(cellRenderer);
+
+        childrenTable.setAutoscrolls(true);
+        childrenTable.setCellSelectionEnabled(true);
+        childrenTable.setFillsViewportHeight(true);
+        childrenTable.setFocusTraversalPolicyProvider(true);
         childrenTable.setGridColor(new java.awt.Color(153, 51, 0));
-        childrenTable.setRequestFocusEnabled(false);
         childrenTable.setRowHeight(35);
         childrenTable.setSelectionBackground(new java.awt.Color(255, 255, 234));
         childrenTable.setSelectionForeground(new java.awt.Color(255, 102, 102));
         childrenTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         childrenTable.setShowGrid(true);
-        childrenTable.setUpdateSelectionOnSort(false);
         childrenTable.setVerifyInputWhenFocusTarget(false);
         childrenTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

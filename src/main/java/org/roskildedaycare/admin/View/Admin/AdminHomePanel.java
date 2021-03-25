@@ -62,7 +62,7 @@ public class AdminHomePanel extends javax.swing.JPanel {
         staffButton.setBorderPainted(false);
         staffButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                staffButtonActionPerformed(evt);
+                staffButtonActionPerformed(frame);
             }
         });
 
@@ -168,11 +168,11 @@ public class AdminHomePanel extends javax.swing.JPanel {
     }
 
     private void childrenButtonActionPerformed(MainFrame frame) {
-        frame.changePanel("admin/children");
+        frame.changePanel(ViewWrap.ADMIN_CHILDREN);
     }
 
-    private void staffButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void staffButtonActionPerformed(MainFrame frame) {
+        frame.changePanel(ViewWrap.ADMIN_STAFF);
     }
 
     private void scheduleButtonActionPerformed(MainFrame frame) {
@@ -184,7 +184,7 @@ public class AdminHomePanel extends javax.swing.JPanel {
     }
 
     private void settingsButtonActionPerformed(MainFrame frame) {
-        frame.changePanel(ViewWrap.ADMIN_EDIT_CHILD);
+        //TODO: add setting panel
     }
 
     private void logoutButtonActionPerformed(MainFrame frame, StartPanel start) {
