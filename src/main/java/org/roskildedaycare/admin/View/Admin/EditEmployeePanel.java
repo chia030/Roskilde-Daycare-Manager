@@ -2,6 +2,7 @@ package org.roskildedaycare.admin.View.Admin;
 
 import org.roskildedaycare.admin.Model.Employee;
 import org.roskildedaycare.admin.Repository.Data.EmployeesRepo;
+import org.roskildedaycare.admin.Repository.Data.WeeklyShiftsRepo;
 import org.roskildedaycare.admin.View.MainFrame;
 import org.roskildedaycare.admin.View.ViewWrap;
 
@@ -9,6 +10,7 @@ public class EditEmployeePanel extends javax.swing.JPanel {
 
     // Variables:
     private static boolean changed; //true when the employee's info has been changed
+    private static int deletedEmployee;
 
     private javax.swing.JButton backButton;
     private javax.swing.JLabel cpr;
@@ -31,6 +33,14 @@ public class EditEmployeePanel extends javax.swing.JPanel {
     public EditEmployeePanel(MainFrame frame, int employee) {
         initComponents(frame);
         if (employee != 0) initEmployee(employee);
+    }
+
+    public static int getDeletedEmployee() {
+        return deletedEmployee;
+    }
+
+    public static void setDeletedEmployee(int deletedEmployee) {
+        EditEmployeePanel.deletedEmployee = deletedEmployee;
     }
 
     @SuppressWarnings("unchecked")
@@ -265,8 +275,17 @@ public class EditEmployeePanel extends javax.swing.JPanel {
     private void deleteButtonActionPerformed(int id) {
 
         //TODO ask the user to confirm
+        deletedEmployee = id;
+
+        EmployeesRepo.setInactive(id);
+        WeeklyShiftsRepo.shuffleShift(id);
 
         EmployeesRepo.deleteEmployee(id);
+
+        changed = true;
+
+        backButton.doClick();
+
     }
 
     private void initEmployee(int id) {
@@ -309,9 +328,12 @@ public class EditEmployeePanel extends javax.swing.JPanel {
         }
 
         if (employee != null) {
+
             EmployeesRepo.alterEmployee(employee, id);
             changed = true;
-        } else System.out.println("ohoh");
+            backButton.doClick();
+
+        } else System.out.println("Something went wrong!");
 
     }
 

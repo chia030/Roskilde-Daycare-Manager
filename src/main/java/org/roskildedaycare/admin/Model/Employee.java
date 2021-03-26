@@ -18,6 +18,8 @@ public class Employee {
     private boolean paid;
     private int payment_month;
 
+    private boolean active;
+
     //employee_type variables:
     private String monthlySalary;
     private int hoursPerWeek;
@@ -154,6 +156,14 @@ public class Employee {
 
     public void setPayment_month(int payment_month) {
         this.payment_month = payment_month;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

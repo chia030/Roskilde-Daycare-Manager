@@ -14,10 +14,6 @@ public class Shift {
     private LocalDate day_of_week;
     private int teacher;
 
-    //ASSIGNED ATTRIBUTES:
-    //does it need to be an object??
-    private Employee assignee; // TODO make it shuffle every week
-
     public Shift() {
     }
 
@@ -78,11 +74,4 @@ public class Shift {
         this.teacher = teacher;
     }
 
-    public Employee getAssignee() {
-        return assignee;
-    }
-
-    public void setAssignee(Employee assignee) {
-        this.assignee = assignee;
-    }
 }

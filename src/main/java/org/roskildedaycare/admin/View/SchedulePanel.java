@@ -1,6 +1,14 @@
 package org.roskildedaycare.admin.View;
 
+import org.roskildedaycare.admin.Repository.Data.ClassesRepo;
+import org.roskildedaycare.admin.Repository.Data.WeeklyShiftsRepo;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 public abstract class SchedulePanel extends javax.swing.JPanel {
 
@@ -44,11 +52,6 @@ public abstract class SchedulePanel extends javax.swing.JPanel {
         backButton.setMaximumSize(new java.awt.Dimension(575, 515));
         backButton.setMinimumSize(new java.awt.Dimension(575, 515));
         backButton.setPreferredSize(new java.awt.Dimension(575, 515));
-//        backButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                backButtonActionPerformed(evt);
-//            }
-//        });
 
         childrenHeader.setFont(new java.awt.Font("MS Gothic", 0, 48)); // NOI18N
         childrenHeader.setForeground(new java.awt.Color(255, 102, 102));
@@ -74,61 +77,36 @@ public abstract class SchedulePanel extends javax.swing.JPanel {
         scheduleTable.setBackground(new java.awt.Color(255, 250, 200));
         scheduleTable.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         scheduleTable.setForeground(new java.awt.Color(153, 51, 0));
-        scheduleTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {" 08:00", "  UNICORN", " teachername", " teachername", " teachername", " teachername", " teachername"},
-                        {" ", "  RAINBOW", " teachername", " teachername", " teachername", " teachername", " teachername"},
-                        {" 12:00", "  UNICORN", " teachername", " teachername", " teachername", " teachername", " teachername"},
-                        {"", "  RAINBOW", " teachername", " teachername", " teachername", " teachername", " teachername"}
-                },
-                new String[]{
-                        "START TIME", "CLASS", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"
-                }
-        ) {
-            Class[] types = new Class[]{
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean[]{
-                    false, false, false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
+        setTableData();
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
-        scheduleTable.setAutoscrolls(false);
-        scheduleTable.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        scheduleTable.setFocusable(false);
+        scheduleTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+        scheduleTable.getColumnModel().getColumn(1).setPreferredWidth(20);
+
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        scheduleTable.getColumnModel().getColumn(0).setCellRenderer(cellRenderer);
+        scheduleTable.getColumnModel().getColumn(1).setCellRenderer(cellRenderer);
+
+        scheduleTable.setAutoscrolls(true);
+        scheduleTable.setCellSelectionEnabled(true);
+        scheduleTable.setFillsViewportHeight(true);
+        scheduleTable.setFocusTraversalPolicyProvider(true);
         scheduleTable.setGridColor(new java.awt.Color(153, 51, 0));
         scheduleTable.setMaximumSize(new java.awt.Dimension(751, 266));
         scheduleTable.setMinimumSize(new java.awt.Dimension(751, 266));
-        scheduleTable.setName(""); // NOI18N
         scheduleTable.setPreferredSize(new java.awt.Dimension(751, 266));
-        scheduleTable.setRequestFocusEnabled(false);
         scheduleTable.setRowHeight(60);
         scheduleTable.setSelectionBackground(new java.awt.Color(253, 255, 245));
         scheduleTable.setSelectionForeground(new java.awt.Color(204, 0, 0));
         scheduleTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         scheduleTable.setShowGrid(true);
-        scheduleTable.setUpdateSelectionOnSort(false);
-        scheduleTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                scheduleTableMouseClicked(evt);
-            }
-        });
+        scheduleTable.setVerifyInputWhenFocusTarget(false);
+
         scheduleTablePanel.setViewportView(scheduleTable);
         if (scheduleTable.getColumnModel().getColumnCount() > 0) {
             scheduleTable.getColumnModel().getColumn(0).setResizable(false);
             scheduleTable.getColumnModel().getColumn(1).setResizable(false);
-            scheduleTable.getColumnModel().getColumn(2).setResizable(false);
-            scheduleTable.getColumnModel().getColumn(3).setResizable(false);
-            scheduleTable.getColumnModel().getColumn(4).setResizable(false);
-            scheduleTable.getColumnModel().getColumn(5).setResizable(false);
-            scheduleTable.getColumnModel().getColumn(6).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -171,8 +149,35 @@ public abstract class SchedulePanel extends javax.swing.JPanel {
 
     protected abstract void backButtonActionPerformed(MainFrame frame);
 
-    private void scheduleTableMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+    protected void setTableData() {
+
+        // TABLE MODEL:
+        Object[][] rowData = {
+                {"08:00", ClassesRepo.fetchClassName(1), WeeklyShiftsRepo.fetchAssignee("1a"), WeeklyShiftsRepo.fetchAssignee("2a"), WeeklyShiftsRepo.fetchAssignee("3a"), WeeklyShiftsRepo.fetchAssignee("4a"), WeeklyShiftsRepo.fetchAssignee("5a")},
+                {"", ClassesRepo.fetchClassName(2), WeeklyShiftsRepo.fetchAssignee("1c"), WeeklyShiftsRepo.fetchAssignee("2c"), WeeklyShiftsRepo.fetchAssignee("3c"), WeeklyShiftsRepo.fetchAssignee("4c"), WeeklyShiftsRepo.fetchAssignee("5c")},
+                {"12:00", ClassesRepo.fetchClassName(1), WeeklyShiftsRepo.fetchAssignee("1b"), WeeklyShiftsRepo.fetchAssignee("2b"), WeeklyShiftsRepo.fetchAssignee("3b"), WeeklyShiftsRepo.fetchAssignee("4b"), WeeklyShiftsRepo.fetchAssignee("5b")},
+                {"", ClassesRepo.fetchClassName(2), WeeklyShiftsRepo.fetchAssignee("1d"), WeeklyShiftsRepo.fetchAssignee("2d"), WeeklyShiftsRepo.fetchAssignee("3d"), WeeklyShiftsRepo.fetchAssignee("4d"), WeeklyShiftsRepo.fetchAssignee("5d")}
+        };
+        String[] columnNames = {"START", "CLASS", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
+
+        DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+        // END
+
+        scheduleTable.setModel(tableModel);
+
+        LocalDate date = LocalDate.now();
+        WeekFields weekFields = WeekFields.ISO.of(Locale.getDefault()); //ISO is necessary for weeks starting on Monday
+
+        weekNumLabel.setText(" Week Number: " + date.get(weekFields.weekOfWeekBasedYear()));
+
     }
 
 

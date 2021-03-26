@@ -10,6 +10,7 @@ import java.awt.event.ItemEvent;
 public class AddEmployeePanel extends javax.swing.JPanel {
 
     // Variables:
+    private static boolean changed; //true when the list has been changed
     private static int checkedBox; // teacher=1, janitor=2
 
     private javax.swing.JPanel addFormPanel;
@@ -176,7 +177,7 @@ public class AddEmployeePanel extends javax.swing.JPanel {
         saveButton.setBorderPainted(false);
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
+                saveButtonActionPerformed();
             }
         });
 
@@ -287,7 +288,10 @@ public class AddEmployeePanel extends javax.swing.JPanel {
     }
 
     private void backButtonActionPerformed(MainFrame frame) {
+
+        if (changed) ViewWrap.staffPanel.refresh(frame);
         frame.changePanel(ViewWrap.ADMIN_STAFF);
+
     }
 
     private void teacherBoxItemListener(java.awt.event.ItemEvent evt) {
@@ -311,17 +315,28 @@ public class AddEmployeePanel extends javax.swing.JPanel {
     }
 
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void saveButtonActionPerformed() {
 
         if ((newEmployee() != null)) {
-            EmployeesRepo.addEmployee(newEmployee()); //returns int
+            System.out.println(EmployeesRepo.addEmployee(newEmployee())); //returns int
+
+            changed = true;
+            backButton.doClick();
+
+
+
         /*
         OUTCOME 1 = janitor limit reached
         OUTCOME 2 = teacher limit reached
         OUTCOME 3 = addition successful
-        OUTCOME 4 = other error (likely database error or format)
+        OUTCOME 4 = other error (likely database error or format) //probably some problem with the id
          */
-        } else System.out.println("incorrect data format");
+
+
+        } else {
+            System.out.println(EmployeesRepo.addEmployee(newEmployee()));
+            changed = false;
+        }
 
         //refresh/reset -> update arraylist
 
@@ -346,6 +361,7 @@ public class AddEmployeePanel extends javax.swing.JPanel {
 
 
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
 

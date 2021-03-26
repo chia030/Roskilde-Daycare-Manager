@@ -922,148 +922,154 @@
       <DataType>tinyint(2)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="274" parent="230" name="staff_employee_id_uindex">
+    <column id="274" parent="230" name="is_active">
+      <Position>10</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>1</DefaultExpression>
+    </column>
+    <index id="275" parent="230" name="staff_employee_id_uindex">
       <ColNames>employee_id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="275" parent="230" name="staff_cpr_uindex">
+    <index id="276" parent="230" name="staff_cpr_uindex">
       <ColNames>cpr</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="276" parent="230" name="PRIMARY">
+    <key id="277" parent="230" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>employee_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="277" parent="230" name="staff_employee_id_uindex">
+    <key id="278" parent="230" name="staff_employee_id_uindex">
       <ColNames>employee_id</ColNames>
       <UnderlyingIndexName>staff_employee_id_uindex</UnderlyingIndexName>
     </key>
-    <key id="278" parent="230" name="staff_cpr_uindex">
+    <key id="279" parent="230" name="staff_cpr_uindex">
       <ColNames>cpr</ColNames>
       <UnderlyingIndexName>staff_cpr_uindex</UnderlyingIndexName>
     </key>
-    <column id="279" parent="231" name="user_id">
+    <column id="280" parent="231" name="user_id">
       <Position>1</Position>
       <DataType>varchar(12)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="280" parent="231" name="password">
+    <column id="281" parent="231" name="password">
       <Position>2</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="281" parent="231" name="all_permissions">
+    <column id="282" parent="231" name="all_permissions">
       <Position>3</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="282" parent="231" name="users_user_id_uindex">
+    <index id="283" parent="231" name="users_user_id_uindex">
       <ColNames>user_id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="283" parent="231" name="PRIMARY">
+    <key id="284" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="284" parent="231" name="users_user_id_uindex">
+    <key id="285" parent="231" name="users_user_id_uindex">
       <ColNames>user_id</ColNames>
       <UnderlyingIndexName>users_user_id_uindex</UnderlyingIndexName>
     </key>
-    <column id="285" parent="232" name="cpr">
+    <column id="286" parent="232" name="cpr">
       <Position>1</Position>
       <DataType>char(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="286" parent="232" name="name">
+    <column id="287" parent="232" name="name">
       <Position>2</Position>
       <DataType>varchar(35)|0s</DataType>
     </column>
-    <column id="287" parent="232" name="parent_name">
+    <column id="288" parent="232" name="parent_name">
       <Position>3</Position>
       <DataType>varchar(35)|0s</DataType>
     </column>
-    <column id="288" parent="232" name="parent_number">
+    <column id="289" parent="232" name="parent_number">
       <Position>4</Position>
       <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="289" parent="232" name="waiting_list_cpr_uindex">
+    <index id="290" parent="232" name="waiting_list_cpr_uindex">
       <ColNames>cpr</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="290" parent="232" name="PRIMARY">
+    <key id="291" parent="232" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>cpr</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="291" parent="232" name="waiting_list_cpr_uindex">
+    <key id="292" parent="232" name="waiting_list_cpr_uindex">
       <ColNames>cpr</ColNames>
       <UnderlyingIndexName>waiting_list_cpr_uindex</UnderlyingIndexName>
     </key>
-    <column id="292" parent="233" name="shift_id">
+    <column id="293" parent="233" name="shift_id">
       <Position>1</Position>
       <DataType>char(2)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="293" parent="233" name="class_id">
+    <column id="294" parent="233" name="class_id">
       <Position>2</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="294" parent="233" name="start_time">
+    <column id="295" parent="233" name="start_time">
       <Position>3</Position>
       <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="295" parent="233" name="end_time">
+    <column id="296" parent="233" name="end_time">
       <Position>4</Position>
       <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="296" parent="233" name="day_of_week">
+    <column id="297" parent="233" name="day_of_week">
       <Position>5</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="297" parent="233" name="employee_id">
+    <column id="298" parent="233" name="employee_id">
       <Position>6</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="298" parent="233" name="weekly_shifts_shift_id_uindex">
+    <index id="299" parent="233" name="weekly_shifts_shift_id_uindex">
       <ColNames>shift_id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="299" parent="233" name="weekly_shifts_classes__fk">
+    <index id="300" parent="233" name="weekly_shifts_classes__fk">
       <ColNames>class_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="300" parent="233" name="weekly_shifts_staff_employee_id_fk">
+    <index id="301" parent="233" name="weekly_shifts_staff_employee_id_fk">
       <ColNames>employee_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="301" parent="233" name="PRIMARY">
+    <key id="302" parent="233" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>shift_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="302" parent="233" name="weekly_shifts_shift_id_uindex">
+    <key id="303" parent="233" name="weekly_shifts_shift_id_uindex">
       <ColNames>shift_id</ColNames>
       <UnderlyingIndexName>weekly_shifts_shift_id_uindex</UnderlyingIndexName>
     </key>
-    <foreign-key id="303" parent="233" name="weekly_shifts_classes__fk">
+    <foreign-key id="304" parent="233" name="weekly_shifts_classes__fk">
       <ColNames>class_id</ColNames>
       <RefTableName>classes</RefTableName>
       <RefColNames>class_id</RefColNames>
     </foreign-key>
-    <foreign-key id="304" parent="233" name="weekly_shifts_staff_employee_id_fk">
+    <foreign-key id="305" parent="233" name="weekly_shifts_staff_employee_id_fk">
       <ColNames>employee_id</ColNames>
       <RefTableName>staff</RefTableName>
       <RefColNames>employee_id</RefColNames>

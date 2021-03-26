@@ -143,10 +143,14 @@ public class EmployeesRepo {
 
         fetchTypeValues(employee);
 
-        // checking if the limit has already been reached
-        if (employee.getType().equals("JANITOR") && employee.getTypeLimit() == janitorCount) return 1;
-        else if (employee.getType().equals("TEACHER") && employee.getTypeLimit() == teacherCount) return 2;
+/*      I TURNED THIS PART OFF FOR THE SAKE OF TESTING, FOR NOW [LIMIT CHECK]
 
+        // checking if the limit has already been reached:
+//        if (employee.getType().equals("JANITOR") && employee.getTypeLimit() == janitorCount) return 1;
+//        else if (employee.getType().equals("TEACHER") && employee.getTypeLimit() == teacherCount) return 2;
+
+
+*/
         int newID = getLastEmployee() + 1;
 
         String sql = "INSERT INTO staff (employee_id,cpr,name,type,dob,phone_number,IBAN,is_paid,payment_month) " +
@@ -163,9 +167,11 @@ public class EmployeesRepo {
         try {
 
             statement.executeUpdate(sql);
+
             return 3;
 
         } catch (Exception e) {
+            e.printStackTrace();
             return 4;
         }
 
@@ -188,6 +194,7 @@ public class EmployeesRepo {
         try {
             statement.executeUpdate(sql);
             return true;
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -195,19 +202,54 @@ public class EmployeesRepo {
 
     }
 
-    //TODO check if the 'delete' option works
 
-    public static boolean deleteEmployee(int employee_id) {
+    public static void setInactive(int employee_id) {
+
+        String sql = "UPDATE staff SET is_active = '0' WHERE employee_id ='" + employee_id + "'";
+
+        try {
+            statement.executeUpdate(sql);
+            teacherCount -= 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static int deleteEmployee(int employee_id) {
 
         String sql = "DELETE FROM staff WHERE employee_id = '" + employee_id + "'";
 
         try {
             statement.executeUpdate(sql);
-            return true;
+            employeesList.clear();
+
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+
+        return employee_id;
+
+    }
+
+
+    public static int fetchInactive() {
+
+        String sql = "SELECT * FROM staff WHERE type = 'TEACHER' AND is_active = '0'";
+
+        try {
+
+            ResultSet res = statement.executeQuery(sql);
+
+            while (res.next()) {
+                return res.getInt("employee_id"); //returns the first one only
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
 
     }
 

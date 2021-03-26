@@ -111,8 +111,6 @@ public class StaffPanel extends javax.swing.JPanel {
         staffTable.setFillsViewportHeight(true);
         staffTable.setFocusTraversalPolicyProvider(true);
         staffTable.setGridColor(new java.awt.Color(153, 51, 0));
-        staffTable.setMinimumSize(new java.awt.Dimension(922, 175));
-        staffTable.setPreferredSize(new java.awt.Dimension(922, 175));
         staffTable.setRowHeight(35);
         staffTable.setSelectionBackground(new java.awt.Color(255, 255, 234));
         staffTable.setSelectionForeground(new java.awt.Color(255, 102, 102));
