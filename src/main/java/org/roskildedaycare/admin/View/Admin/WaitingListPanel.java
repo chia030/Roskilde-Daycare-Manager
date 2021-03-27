@@ -11,14 +11,16 @@ import java.awt.event.ItemEvent;
 
 public class WaitingListPanel extends javax.swing.JPanel {
 
-    private static int deleteButtonState;
     // Variables:
+    private static int deleteButtonState;
+
     private javax.swing.JButton addButton;
     private javax.swing.JToggleButton deleteButton;
     private javax.swing.JButton backButton;
     private javax.swing.JTable childrenTable;
     private javax.swing.JLabel listHeader;
     private javax.swing.JScrollPane tablePane;
+    private javax.swing.JLabel successLabel;
     // End of variables
 
     public WaitingListPanel(MainFrame frame) {
@@ -34,6 +36,7 @@ public class WaitingListPanel extends javax.swing.JPanel {
         childrenTable = new javax.swing.JTable();
         addButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JToggleButton();
+        successLabel = new javax.swing.JLabel();
 
         setOpaque(false);
 
@@ -68,26 +71,8 @@ public class WaitingListPanel extends javax.swing.JPanel {
         childrenTable.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         childrenTable.setForeground(new java.awt.Color(153, 51, 0));
 
-        // TABLE MODEL INIT:
-        Object[][] rowData = {};
-        String[] columnNames = {"CPR", "NAME", "PARENT", "PARENT NUMBER"};
+        initTableModel();
 
-        DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
-            boolean[] canEdit = new boolean[]{
-                    false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        };
-
-        for (Child i : WaitingListRepo.fetchWaitingList()) {
-            tableModel.addRow(new Object[]{i.getCpr(), i.getName(), i.getParent_name(), i.getParent_number()});
-        }
-        // END
-
-        childrenTable.setModel(tableModel);
         childrenTable.setAutoscrolls(true);
         childrenTable.setCellSelectionEnabled(true);
         childrenTable.setFillsViewportHeight(true);
@@ -119,15 +104,16 @@ public class WaitingListPanel extends javax.swing.JPanel {
         addButton.setPreferredSize(new java.awt.Dimension(575, 515));
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                addButtonActionPerformed(frame);
             }
         });
 
+        deleteButton.setSelected(false);
         deleteButton.setBackground(new java.awt.Color(255, 250, 200));
         deleteButton.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         deleteButton.setForeground(new java.awt.Color(153, 51, 0));
         deleteButton.setText("- DELETE");
-        deleteButton.setToolTipText("Please select the entry you wish to edit.");
+        deleteButton.setToolTipText("Please select the entry you wish to remove.");
         deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         deleteButton.setDoubleBuffered(true);
         deleteButton.setFocusPainted(false);
@@ -139,6 +125,15 @@ public class WaitingListPanel extends javax.swing.JPanel {
                 deleteButtonItemEvent(evt);
             }
         });
+
+        successLabel.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        successLabel.setForeground(new java.awt.Color(153, 51, 0));
+        successLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        successLabel.setText("   ");
+        successLabel.setMaximumSize(new java.awt.Dimension(164, 19));
+        successLabel.setMinimumSize(new java.awt.Dimension(164, 19));
+        successLabel.setPreferredSize(new java.awt.Dimension(164, 19));
+        successLabel.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -161,6 +156,10 @@ public class WaitingListPanel extends javax.swing.JPanel {
                                                 .addGap(187, 187, 187)
                                                 .addComponent(listHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(66, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(successLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(302, 302, 302))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +172,9 @@ public class WaitingListPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(45, 45, 45)
+                                .addGap(16, 16, 16)
+                                .addComponent(successLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(100, Short.MAX_VALUE))
         );
@@ -189,17 +190,23 @@ public class WaitingListPanel extends javax.swing.JPanel {
         if (evt.getClickCount() == 2 && deleteButtonState == ItemEvent.SELECTED) {
             JTable target = (JTable) evt.getSource();
             int row = target.getSelectedRow();
-            System.out.println(target.getValueAt(row, 0).toString()); //returns the primary key of the entry (CPR)
 
             //TODO add a pop-up menu to confirm the deletion of the entry
-            //TODO add the data handling
+
+            if (WaitingListRepo.deleteChild(target.getValueAt(row, 0).toString())) {
+
+                successLabel.setText("Deletion successful!");
+                ViewWrap.waitingList.refresh();
+
+            } else successLabel.setText("An error occurred.");
 
         }
 
+
     }
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void addButtonActionPerformed(MainFrame frame) {
+        frame.changePanel(ViewWrap.ADMIN_ADD_WAITING);
     }
 
     private void deleteButtonItemEvent(java.awt.event.ItemEvent evt) {
@@ -220,6 +227,33 @@ public class WaitingListPanel extends javax.swing.JPanel {
 
         }
 
+    }
+
+    public void initTableModel() {
+        // TABLE MODEL INIT:
+        Object[][] rowData = {};
+        String[] columnNames = {"CPR", "NAME", "PARENT", "PARENT NUMBER"};
+
+        DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+
+        for (Child i : WaitingListRepo.fetchWaitingList()) {
+            tableModel.addRow(new Object[]{i.getCpr(), i.getName(), i.getParent_name(), i.getParent_number()});
+        }
+        // END
+
+        childrenTable.setModel(tableModel);
+    }
+
+    public void refresh() {
+        ViewWrap.waitingList.initTableModel();
     }
 
 }

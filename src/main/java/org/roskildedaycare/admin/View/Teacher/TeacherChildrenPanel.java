@@ -60,26 +60,7 @@ public class TeacherChildrenPanel extends javax.swing.JPanel {
         childrenTable.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         childrenTable.setForeground(new java.awt.Color(153, 51, 0));
 
-        // TABLE MODEL INIT:
-        Object[][] rowData = {};
-        String[] columnNames = {"#", "NAME", "AGE", "CLASS"};
-
-        DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
-            boolean[] canEdit = new boolean[]{
-                    false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        };
-
-        for (Child i : ChildrenRepo.fetchAllChildren()) {
-            tableModel.addRow(new Object[]{i.getStudent_id() + ".", i.getName(), i.getAge(), i.getClass_name()});
-        }
-        // END
-
-        childrenTable.setModel(tableModel);
+        initTableModel();
 
         childrenTable.getColumnModel().getColumn(0).setPreferredWidth(10);
         childrenTable.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -99,11 +80,6 @@ public class TeacherChildrenPanel extends javax.swing.JPanel {
         childrenTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         childrenTable.setShowGrid(true);
         childrenTable.setVerifyInputWhenFocusTarget(false);
-        childrenTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                childrenTableMouseClicked(evt);
-            }
-        });
         tablePane.setViewportView(childrenTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -141,10 +117,29 @@ public class TeacherChildrenPanel extends javax.swing.JPanel {
         frame.changePanel(ViewWrap.TEACHER_HOME);
     }
 
-    private void childrenTableMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
-    }
 
+    public void initTableModel() {
+        // TABLE MODEL INIT:
+        Object[][] rowData = {};
+        String[] columnNames = {"#", "NAME", "AGE", "GROUP"};
+
+        DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+
+        for (Child i : ChildrenRepo.fetchAllChildren()) {
+            tableModel.addRow(new Object[]{i.getStudent_id() + ".", i.getName(), i.getAge(), i.getClass_name()});
+        }
+        // END
+
+        childrenTable.setModel(tableModel);
+    }
 
 }
 

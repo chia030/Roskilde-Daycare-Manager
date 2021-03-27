@@ -41,4 +41,38 @@ public class WaitingListRepo {
 
     }
 
+    public static boolean addChild(Child child) {
+
+        String sql = "INSERT INTO waiting_list (cpr,name,parent_name,parent_number) " +
+                "VALUES ( '" +
+                child.getCpr() + "', '" +
+                child.getName() + "', '" +
+                child.getParent_name() + "', '" +
+                child.getParent_number() + "')";
+
+        try {
+            statement.executeUpdate(sql);
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static boolean deleteChild(String cpr) {
+
+        String sql = "DELETE FROM waiting_list WHERE cpr = '" + cpr + "'";
+
+        try {
+            statement.executeUpdate(sql);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

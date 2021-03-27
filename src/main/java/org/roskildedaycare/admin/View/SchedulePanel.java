@@ -67,7 +67,7 @@ public abstract class SchedulePanel extends javax.swing.JPanel {
         scheduleTablePanel.setBackground(new java.awt.Color(253, 255, 245));
         scheduleTablePanel.setForeground(new java.awt.Color(153, 51, 0));
         scheduleTablePanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scheduleTablePanel.setToolTipText("");
+        scheduleTablePanel.setToolTipText("This week's working schedule.");
         scheduleTablePanel.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         scheduleTablePanel.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         scheduleTablePanel.setMaximumSize(new java.awt.Dimension(751, 266));
@@ -89,7 +89,6 @@ public abstract class SchedulePanel extends javax.swing.JPanel {
         scheduleTable.getColumnModel().getColumn(1).setCellRenderer(cellRenderer);
 
         scheduleTable.setAutoscrolls(true);
-        scheduleTable.setCellSelectionEnabled(true);
         scheduleTable.setFillsViewportHeight(true);
         scheduleTable.setFocusTraversalPolicyProvider(true);
         scheduleTable.setGridColor(new java.awt.Color(153, 51, 0));
@@ -158,7 +157,7 @@ public abstract class SchedulePanel extends javax.swing.JPanel {
                 {"12:00", ClassesRepo.fetchClassName(1), WeeklyShiftsRepo.fetchAssignee("1b"), WeeklyShiftsRepo.fetchAssignee("2b"), WeeklyShiftsRepo.fetchAssignee("3b"), WeeklyShiftsRepo.fetchAssignee("4b"), WeeklyShiftsRepo.fetchAssignee("5b")},
                 {"", ClassesRepo.fetchClassName(2), WeeklyShiftsRepo.fetchAssignee("1d"), WeeklyShiftsRepo.fetchAssignee("2d"), WeeklyShiftsRepo.fetchAssignee("3d"), WeeklyShiftsRepo.fetchAssignee("4d"), WeeklyShiftsRepo.fetchAssignee("5d")}
         };
-        String[] columnNames = {"START", "CLASS", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
+        String[] columnNames = {"START", "GROUP", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
 
         DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
             boolean[] canEdit = new boolean[]{

@@ -112,26 +112,7 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
         childrenTable.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         childrenTable.setForeground(new java.awt.Color(153, 51, 0));
 
-        // TABLE MODEL INIT:
-        Object[][] rowData = {};
-        String[] columnNames = {"#", "NAME", "AGE", "CLASS"};
-
-        DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
-            boolean[] canEdit = new boolean[]{
-                    false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        };
-
-        for (Child i : ChildrenRepo.fetchAllChildren()) {
-            tableModel.addRow(new Object[]{i.getStudent_id() + ".", i.getName(), i.getAge(), i.getClass_name()});
-        }
-        // END
-
-        childrenTable.setModel(tableModel);
+        initTableModel();
 
         childrenTable.getColumnModel().getColumn(0).setPreferredWidth(10);
         childrenTable.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -210,7 +191,7 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
     }
 
     private void addButtonActionPerformed(MainFrame frame) {
-        //display child form panel
+        frame.changePanel(ViewWrap.ADMIN_ADD_CHILD);
     }
 
     private void editButtonItemListener(java.awt.event.ItemEvent evt) {
@@ -238,8 +219,7 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
             JTable target = (JTable) evt.getSource();
             int row = target.getSelectedRow();
 
-            //selected student's id: {target.getValueAt(row, 0).toString().charAt(0)}
-            student_id = Integer.parseInt(String.valueOf(target.getValueAt(row, 0).toString().charAt(0)));
+            student_id = Integer.parseInt(target.getValueAt(row, 0).toString().replace(".", ""));
 
             ViewWrap.editChild.refresh(student_id);
             frame.changePanel(ViewWrap.ADMIN_EDIT_CHILD);
@@ -249,11 +229,35 @@ public class AdminChildrenPanel extends javax.swing.JPanel {
 
     }
 
-    //called in EditChildPanel when the user decides to go back
-    //maybe this is not needed
-    public void reset(MainFrame frame) {
-        initComponents(frame);
+    public void initTableModel() {
+
+        // TABLE MODEL INIT:
+        Object[][] rowData = {};
+        String[] columnNames = {"#", "NAME", "AGE", "GROUP"};
+
+        DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+
+        for (Child i : ChildrenRepo.fetchAllChildren()) {
+            tableModel.addRow(new Object[]{i.getStudent_id() + ".", i.getName(), i.getAge(), i.getClass_name()});
+        }
+        // END
+
+        childrenTable.setModel(tableModel);
+    }
+
+    public void refresh(MainFrame frame) {
+
+        ViewWrap.adminChildren.initTableModel();
         student_id = 0;
+
     }
 
 }

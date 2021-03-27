@@ -66,7 +66,7 @@ public class EmployeesRepo {
 
                 employee.setHoursPerWeek(res.getInt("hours_per_week"));
                 employee.setMonthlySalary(res.getString("monthly_salary"));
-                employee.setTypeLimit(res.getInt("limit"));
+                employee.setTypeLimit(res.getInt("staff_capacity"));
 
                 return employee;
             }
@@ -84,6 +84,8 @@ public class EmployeesRepo {
     }
 
     public static ArrayList<Employee> fetchAllEmployees() {
+
+        checkPayment();
 
         String sql = "SELECT * FROM staff";
 
@@ -128,6 +130,24 @@ public class EmployeesRepo {
 
     }
 
+    //is_paid IS SET TO FALSE IF THE PAYMENT MONTH IS NOT THE CURRENT MONTH
+    public static void checkPayment() {
+
+        int payment_month = Integer.parseInt(LocalDate.now().format(monthFormatter));
+
+        String sql = "UPDATE staff " +
+                "SET is_paid = '0', " +
+                "payment_month = '" + payment_month + "' " +
+                "WHERE payment_month != '" + payment_month + "'";
+
+        try {
+            statement.executeUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static int getLastEmployee() {
         return employeesList.get((employeesList.size()) - 1).getEmployee_id();
     }
@@ -143,7 +163,7 @@ public class EmployeesRepo {
 
         fetchTypeValues(employee);
 
-/*      I TURNED THIS PART OFF FOR THE SAKE OF TESTING, FOR NOW [LIMIT CHECK]
+/*      I TURNED THE FOLLOWING PART OFF FOR THE SAKE OF TESTING, FOR NOW [LIMIT CHECK]
 
         // checking if the limit has already been reached:
 //        if (employee.getType().equals("JANITOR") && employee.getTypeLimit() == janitorCount) return 1;
@@ -151,6 +171,7 @@ public class EmployeesRepo {
 
 
 */
+
         int newID = getLastEmployee() + 1;
 
         String sql = "INSERT INTO staff (employee_id,cpr,name,type,dob,phone_number,IBAN,is_paid,payment_month) " +
@@ -222,7 +243,6 @@ public class EmployeesRepo {
 
         try {
             statement.executeUpdate(sql);
-            employeesList.clear();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -250,6 +270,74 @@ public class EmployeesRepo {
         }
 
         return 0;
+
+    }
+
+    public static int fetchStaffCapacity(String type) {
+
+        String sql = "SELECT * FROM employee_type WHERE type = '" + type + "'";
+
+        try {
+
+            ResultSet res = statement.executeQuery(sql);
+
+            while (res.next()) {
+                return res.getInt("staff_capacity");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+
+    }
+
+    public static boolean setCapacity(int capacity, String type) {
+
+        String sql = "UPDATE employee_type SET staff_capacity = '" + capacity + "' WHERE type ='" + type + "'";
+
+        try {
+            statement.executeUpdate(sql);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static String fetchMonthlySalary(String type) {
+
+        String sql = "SELECT * FROM employee_type WHERE type = '" + type + "'";
+
+        try {
+
+            ResultSet res = statement.executeQuery(sql);
+
+            while (res.next()) {
+                return res.getString("monthly_salary");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public static boolean setSalary(String salary, String type) {
+
+        String sql = "UPDATE employee_type SET monthly_salary = '" + salary + "' WHERE type ='" + type + "'";
+
+        try {
+            statement.executeUpdate(sql);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 
     }
 

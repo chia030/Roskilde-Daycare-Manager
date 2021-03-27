@@ -2,9 +2,12 @@ package org.roskildedaycare.admin.Model;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 
 public class Child {
+
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private int student_id;
     private String cpr;
@@ -29,7 +32,17 @@ public class Child {
         this.parent_number = parent_number;
     }
 
-    //CONSTRUCTOR FOR NEW CHILDREN WITH A CLASS
+    //CONSTRUCTOR TO ADD NEW CHILD TO THE DATABASE
+    public Child(String name, String cpr, String dob, String parent_name, String parent_number) {
+        this.name = name;
+        this.cpr = cpr;
+        this.dob = LocalDate.parse(dob, formatter);
+        this.parent_name = parent_name;
+        this.parent_number = parent_number;
+    }
+
+
+    //CONSTRUCTOR FOR CHILDREN PANEL
     public Child(int student_id, String cpr, String name, LocalDate dob, int class_id, String parent_name, String parent_number, int payment, int payment_month) {
         this.student_id = student_id;
         this.cpr = cpr;

@@ -28,6 +28,7 @@ public class EditEmployeePanel extends javax.swing.JPanel {
     private javax.swing.JLabel phone;
     private javax.swing.JTextField phoneField;
     private javax.swing.JButton saveButton;
+    private javax.swing.JLabel successLabel;
     // End of variables
 
     public EditEmployeePanel(MainFrame frame, int employee) {
@@ -62,6 +63,7 @@ public class EditEmployeePanel extends javax.swing.JPanel {
         paymentCheckBox = new javax.swing.JCheckBox();
         saveButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        successLabel = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(771, 539));
         setMinimumSize(new java.awt.Dimension(771, 539));
@@ -150,7 +152,7 @@ public class EditEmployeePanel extends javax.swing.JPanel {
         deleteButton.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         deleteButton.setForeground(new java.awt.Color(153, 51, 0));
         deleteButton.setText("DELETE");
-        deleteButton.setToolTipText("Delete entry.");
+        deleteButton.setToolTipText("Delete staff member.");
         deleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 51, 0), 2));
         deleteButton.setBorderPainted(false);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -158,6 +160,15 @@ public class EditEmployeePanel extends javax.swing.JPanel {
                 deleteButtonActionPerformed(ViewWrap.staffPanel.getEmployee_id());
             }
         });
+
+        successLabel.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        successLabel.setForeground(new java.awt.Color(153, 51, 0));
+        successLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        successLabel.setText("   ");
+        successLabel.setMaximumSize(new java.awt.Dimension(164, 19));
+        successLabel.setMinimumSize(new java.awt.Dimension(164, 19));
+        successLabel.setPreferredSize(new java.awt.Dimension(164, 19));
+        successLabel.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout editFormPanelLayout = new javax.swing.GroupLayout(editFormPanel);
         editFormPanel.setLayout(editFormPanelLayout);
@@ -169,7 +180,9 @@ public class EditEmployeePanel extends javax.swing.JPanel {
                                         .addGroup(editFormPanelLayout.createSequentialGroup()
                                                 .addGap(30, 30, 30)
                                                 .addComponent(paymentCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 248, Short.MAX_VALUE)
+                                                .addGap(42, 42, 42)
+                                                .addComponent(successLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                                                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(26, 26, 26)
                                                 .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -220,7 +233,8 @@ public class EditEmployeePanel extends javax.swing.JPanel {
                                 .addGroup(editFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paymentCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(paymentCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(successLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -254,7 +268,7 @@ public class EditEmployeePanel extends javax.swing.JPanel {
                                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
-        frame.setDefButton(saveButton); //turn it off later
+        changed = false;
 
     }
 
@@ -269,12 +283,20 @@ public class EditEmployeePanel extends javax.swing.JPanel {
 
         //TODO ask the user to confirm
 
-        saveEmployee(id);
+        if (saveEmployee(id)) {
+            successLabel.setText("Changes successful!");
+            changed = true;
+        } else {
+            successLabel.setText("An error occurred.");
+            changed = false;
+        }
+
     }
 
     private void deleteButtonActionPerformed(int id) {
 
         //TODO ask the user to confirm
+
         deletedEmployee = id;
 
         EmployeesRepo.setInactive(id);
@@ -282,9 +304,9 @@ public class EditEmployeePanel extends javax.swing.JPanel {
 
         EmployeesRepo.deleteEmployee(id);
 
-        changed = true;
+        successLabel.setText("Deletion successful!");
 
-        backButton.doClick();
+        changed = true;
 
     }
 
@@ -304,9 +326,7 @@ public class EditEmployeePanel extends javax.swing.JPanel {
 
     }
 
-    private void saveEmployee(int id) {
-
-        System.out.println(id);
+    private boolean saveEmployee(int id) {
 
         Employee employee;
 
@@ -329,11 +349,12 @@ public class EditEmployeePanel extends javax.swing.JPanel {
 
         if (employee != null) {
 
-            EmployeesRepo.alterEmployee(employee, id);
-            changed = true;
-            backButton.doClick();
+            return EmployeesRepo.alterEmployee(employee, id);
 
-        } else System.out.println("Something went wrong!");
+        } else {
+            System.out.println("Something went wrong!");
+            return false;
+        }
 
     }
 

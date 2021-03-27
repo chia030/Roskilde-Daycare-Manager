@@ -1,3 +1,3 @@
-type,hours_per_week,monthly_salary,limit
+type,hours_per_week,monthly_salary,staff_capacity
 JANITOR,40,15000 DKK,1
 TEACHER,20,12000 DKK,4

@@ -184,7 +184,7 @@ public class AdminHomePanel extends javax.swing.JPanel {
     }
 
     private void settingsButtonActionPerformed(MainFrame frame) {
-        //TODO: add setting panel
+        frame.changePanel(ViewWrap.ADMIN_SETTINGS);
     }
 
     private void logoutButtonActionPerformed(MainFrame frame, StartPanel start) {

@@ -75,26 +75,7 @@ public class StaffPanel extends javax.swing.JPanel {
         staffTable.setFont(new java.awt.Font("Consolas", 0, 10)); // NOI18N
         staffTable.setForeground(new java.awt.Color(153, 51, 0));
 
-        // TABLE MODEL INIT:
-        Object[][] rowData = {};
-        String[] columnNames = {"#", "NAME", "PROFESSION", "PHONE N.", "CPR", "IBAN", "PAID"};
-
-        DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
-            boolean[] canEdit = new boolean[]{
-                    false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        };
-
-        for (Employee i : EmployeesRepo.fetchAllEmployees()) {
-            tableModel.addRow(new Object[]{i.getEmployee_id() + ".", i.getName(), i.getType(), i.getPhone_number(), i.getCpr(), i.getIban(), i.isPaid()});
-        }
-        // END
-
-        staffTable.setModel(tableModel);
+        initTableModel();
 
         staffTable.getColumnModel().getColumn(0).setPreferredWidth(5);
         staffTable.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -228,12 +209,9 @@ public class StaffPanel extends javax.swing.JPanel {
             JTable target = (JTable) evt.getSource();
             int row = target.getSelectedRow();
 
-            //selected employee's id: {target.getValueAt(row, 0).toString().charAt(0)}
-            employee_id = Integer.parseInt(String.valueOf(target.getValueAt(row, 0).toString().charAt(0)));
+            employee_id = Integer.parseInt(target.getValueAt(row, 0).toString().replace(".", ""));
             ViewWrap.editEmployee.refresh(employee_id);
             frame.changePanel(ViewWrap.ADMIN_EDIT_EMPLOYEE);
-
-            //TODO fix: this is acting a little weird but it's a minor problem
 
         }
 
@@ -247,8 +225,34 @@ public class StaffPanel extends javax.swing.JPanel {
         frame.changePanel(ViewWrap.ADMIN_ADD_EMPLOYEE);
     }
 
+    public void initTableModel() {
+        // TABLE MODEL INIT:
+        Object[][] rowData = {};
+        String[] columnNames = {"#", "NAME", "PROFESSION", "PHONE N.", "CPR", "IBAN", "PAID"};
+
+        DefaultTableModel tableModel = new DefaultTableModel(rowData, columnNames) {
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+
+        for (Employee i : EmployeesRepo.fetchAllEmployees()) {
+            tableModel.addRow(new Object[]{i.getEmployee_id() + ".", i.getName(), i.getType(), i.getPhone_number(), i.getCpr(), i.getIban(), i.isPaid()});
+        }
+        // END
+
+        staffTable.setModel(tableModel);
+    }
+
     public void refresh(MainFrame frame) {
-        ViewWrap.staffPanel.initComponents(frame);
+
+        ViewWrap.staffPanel.initTableModel();
+        employee_id = 0;
+
     }
 
 }

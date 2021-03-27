@@ -31,6 +31,7 @@ public class AddEmployeePanel extends javax.swing.JPanel {
     private javax.swing.JLabel role;
     private javax.swing.JButton saveButton;
     private javax.swing.JCheckBox teacherCheckBox;
+    private javax.swing.JLabel successLabel;
     // End of variables
 
     public AddEmployeePanel(MainFrame frame) {
@@ -58,6 +59,7 @@ public class AddEmployeePanel extends javax.swing.JPanel {
         ibanField = new javax.swing.JTextField();
         paymentCheckBox = new javax.swing.JCheckBox();
         saveButton = new javax.swing.JButton();
+        successLabel = new javax.swing.JLabel();
 
         setOpaque(false);
 
@@ -172,7 +174,7 @@ public class AddEmployeePanel extends javax.swing.JPanel {
         saveButton.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         saveButton.setForeground(new java.awt.Color(153, 51, 0));
         saveButton.setText("+ADD");
-        saveButton.setToolTipText("Add a new staff member.");
+        saveButton.setToolTipText("Add a new member of the staff.");
         saveButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 51, 0)));
         saveButton.setBorderPainted(false);
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -180,6 +182,15 @@ public class AddEmployeePanel extends javax.swing.JPanel {
                 saveButtonActionPerformed();
             }
         });
+
+        successLabel.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        successLabel.setForeground(new java.awt.Color(153, 51, 0));
+        successLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        successLabel.setText("   ");
+        successLabel.setMaximumSize(new java.awt.Dimension(165, 19));
+        successLabel.setMinimumSize(new java.awt.Dimension(165, 19));
+        successLabel.setPreferredSize(new java.awt.Dimension(165, 19));
+        successLabel.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout addFormPanelLayout = new javax.swing.GroupLayout(addFormPanel);
         addFormPanel.setLayout(addFormPanelLayout);
@@ -219,6 +230,8 @@ public class AddEmployeePanel extends javax.swing.JPanel {
                                         .addGroup(addFormPanelLayout.createSequentialGroup()
                                                 .addGap(30, 30, 30)
                                                 .addComponent(paymentCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(73, 73, 73)
+                                                .addComponent(successLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(30, 30, 30)))
@@ -253,7 +266,8 @@ public class AddEmployeePanel extends javax.swing.JPanel {
                                 .addGap(35, 35, 35)
                                 .addGroup(addFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paymentCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(paymentCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(successLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -285,6 +299,9 @@ public class AddEmployeePanel extends javax.swing.JPanel {
                                 .addComponent(addFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(80, Short.MAX_VALUE))
         );
+
+        changed = false;
+
     }
 
     private void backButtonActionPerformed(MainFrame frame) {
@@ -318,12 +335,15 @@ public class AddEmployeePanel extends javax.swing.JPanel {
     private void saveButtonActionPerformed() {
 
         if ((newEmployee() != null)) {
-            System.out.println(EmployeesRepo.addEmployee(newEmployee())); //returns int
 
-            changed = true;
-            backButton.doClick();
-
-
+            if (EmployeesRepo.addEmployee(newEmployee()) == 3) {
+                successLabel.setText("Added successfully!");
+                changed = true;
+            } else {
+                successLabel.setText("An error occurred.");
+                changed = false;
+                System.out.println(EmployeesRepo.addEmployee(newEmployee()));
+            }
 
         /*
         OUTCOME 1 = janitor limit reached
@@ -332,10 +352,6 @@ public class AddEmployeePanel extends javax.swing.JPanel {
         OUTCOME 4 = other error (likely database error or format) //probably some problem with the id
          */
 
-
-        } else {
-            System.out.println(EmployeesRepo.addEmployee(newEmployee()));
-            changed = false;
         }
 
         //refresh/reset -> update arraylist

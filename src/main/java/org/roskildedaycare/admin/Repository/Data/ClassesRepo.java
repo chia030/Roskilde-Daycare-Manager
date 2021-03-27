@@ -11,7 +11,7 @@ public class ClassesRepo {
 
     static Statement statement = Connector.connectRDAS();
 
-    private ArrayList<DaycareClass> classesList;
+    private static ArrayList<DaycareClass> classesList;
 
     public static String fetchClassName(int class_id) {
 
@@ -30,7 +30,8 @@ public class ClassesRepo {
         return null;
     }
 
-    public ArrayList<DaycareClass> fetchAllClasses() {
+
+    public static ArrayList<DaycareClass> fetchAllClasses() {
 
         String sql = "SELECT * FROM classes";
         classesList = new ArrayList<>();
@@ -54,6 +55,27 @@ public class ClassesRepo {
         }
 
         return classesList;
+
+    }
+
+    public static int getCapacity(int class_id) {
+        for (DaycareClass i : fetchAllClasses()) {
+            if (i.getClass_id() == class_id) return i.getChildren_capacity();
+        }
+        return 0;
+    }
+
+    public static boolean setCapacity(int capacity, int class_id) {
+
+        String sql = "UPDATE classes SET children_capacity = '" + capacity + "' WHERE class_id ='" + class_id + "'";
+
+        try {
+            statement.executeUpdate(sql);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 
     }
 
