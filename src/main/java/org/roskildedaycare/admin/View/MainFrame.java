@@ -16,13 +16,11 @@ public class MainFrame extends JFrame {
         setDefButton(null);
     }
 
-//            This makes the frame open ad infinitum lol:
 //            java.awt.EventQueue.invokeLater(new Runnable() {
 //                public void run() {
 //                    new MainFrame().setVisible(true);
 //                }
 //            });
-
 //    }
 
     public void initFrame() {

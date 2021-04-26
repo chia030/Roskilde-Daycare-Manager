@@ -173,9 +173,9 @@ public abstract class SchedulePanel extends javax.swing.JPanel {
         scheduleTable.setModel(tableModel);
 
         LocalDate date = LocalDate.now();
-        WeekFields weekFields = WeekFields.ISO.of(Locale.getDefault()); //ISO is necessary for weeks starting on Monday
+        WeekFields weekFields = WeekFields.of(Locale.getDefault()); //ISO is necessary for weeks starting on Monday //Except it doesn't work haha
 
-        weekNumLabel.setText(" Week Number: " + date.get(weekFields.weekOfWeekBasedYear()));
+        weekNumLabel.setText(" Week Number: " + (date.get(weekFields.weekOfWeekBasedYear()) - 1));
 
     }
 
